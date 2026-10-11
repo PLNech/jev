@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jevos-v4 plays Space Invaders</title>
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<main class="cabinet">
+
+  <header class="cab-head">
+    <div class="brand">
+      <span class="brand-title">JEVOS-V4</span>
+      <span class="brand-sub">plays SPACE INVADERS</span>
+    </div>
+    <div class="head-right">
+      <span class="led" id="led" title="server status"></span>
+      <span class="led-label" id="ledLabel">LINKING</span>
+      <nav class="modes" aria-label="pilot">
+        <button class="mode-btn" data-mode="brain" aria-pressed="false">BRAIN</button>
+        <button class="mode-btn" data-mode="random" aria-pressed="false">RANDOM</button>
+        <button class="mode-btn" data-mode="human" aria-pressed="false">YOU</button>
+        <button class="mode-btn" data-mode="reset" aria-pressed="false">RESET</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="deck">
+    <div class="stage">
+      <div class="scorebar">
+        <span class="sb-label">SCORE</span><span class="sb-val" id="score">0</span>
+        <span class="sb-label">HI</span><span class="sb-val" id="hi">0</span>
+        <span class="sb-label">WAVE</span><span class="sb-val" id="wave">1</span>
+        <span class="sb-label">EP</span><span class="sb-val" id="epNum">0</span>
+        <span class="sb-lives" id="lives" aria-label="lives"></span>
+      </div>
+      <div class="screen-wrap">
+        <canvas id="game" width="600" height="640"></canvas>
+        <div class="scanlines" aria-hidden="true"></div>
+      </div>
+      <div class="gradebar" id="gradebar">SHOTS 0 · ACC — · WASTED 0 · CLOSE CALLS 0 · SHIELDS 100% · FLIPS 0.0/S</div>
+      <p class="stage-hint" id="stageHint">Pick a pilot: BRAIN (jevos-v4 decides), RANDOM (coin flips), or YOU (arrow keys + space).</p>
+    </div>
+
+    <aside class="brain" aria-label="jev brain panel">
+      <div class="brain-head">
+        <h2 class="brain-title">BRAIN</h2>
+        <span class="brain-endpoint">jevos-v4 q4 GGUF · 127.0.0.1:8153 · RTX 4080</span>
+      </div>
+
+      <div class="wire">
+        <div class="wire-cap" id="wireCap">WORLD: PROSE + FEATURES · 5 QUESTIONS, EVERY ~250&nbsp;MS</div>
+        <p class="wire-state" id="wireState">waiting for a pilot…</p>
+        <p class="wire-err" id="wireErr" style="display:none"></p>
+      </div>
+
+      <div class="verdicts" id="verdicts">
+        <div class="verdict">
+          <div class="v-cap">DANGER: BOMB INCOMING? <span class="v-ans" id="dangerAns">—</span></div>
+          <div class="bar"><div class="bar-fill amber" id="dangerBar"></div></div>
+        </div>
+        <div class="verdict">
+          <div class="v-cap">AIMING AT AN ALIEN? <span class="v-ans" id="fireAns">—</span></div>
+          <div class="bar"><div class="bar-fill" id="fireBar"></div></div>
+        </div>
+        <div class="verdict">
+          <div class="v-cap">BOMB IS LEFT? <span class="v-ans" id="bombSideAns">—</span></div>
+          <div class="bar"><div class="bar-fill amber" id="bombSideBar"></div></div>
+        </div>
+        <div class="applied" id="applied">ACTION: —</div>
+      </div>
+
+      <div class="telemetry">
+        <div class="lat-big"><span id="latNum">—</span><span class="lat-unit">MS</span></div>
+        <div class="lat-rows">
+          <span>LAST REQUEST</span>
+          <span>INFER <b id="inferMs">—</b></span>
+          <span>QUEUE <b id="queueMs">—</b></span>
+          <span>P50 <b id="p50">—</b></span>
+          <span>P95 <b id="p95">—</b></span>
+          <span>TOKENS <b id="tokens">—</b></span>
+          <span><b id="dps">0</b> DEC/S</span>
+        </div>
+        <div class="lat-right">
+          <canvas id="latStrip" width="392" height="34" aria-label="latency history, white line = rolling mean"></canvas>
+          <button class="csv-btn" id="csvBtn" title="download latency log as CSV">LOG ↓CSV</button>
+        </div>
+      </div>
+
+      <div class="gun-charts">
+        <div class="gun-chart">
+          <span class="gun-cap">FIRE RATE · 100% = SHOT THE INSTANT READY</span>
+          <canvas id="rateStrip" width="392" height="30" title="share of gun cycles that end in a shot"></canvas>
+        </div>
+        <div class="gun-chart">
+          <span class="gun-cap">PRECISION · SHOTS TOUCHING TARGETS</span>
+          <canvas id="precStrip" width="392" height="30" title="rolling share of shots that hit an alien"></canvas>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="lab" aria-label="lab: live configuration and study results">
+    <div class="lab-controls">
+      <h2 class="lab-title">LAB</h2>
+      <label class="lab-field"><span>WORLD</span>
+        <select id="labRep">
+          <option value="col">columns</option>
+          <option value="col+legend">columns + rubric</option>
+          <option value="prose">prose</option>
+          <option value="prose+legend">prose + rubric</option>
+          <option value="prose+features">prose + features</option>
+          <option value="telegraphic" selected>telegraphic + quantized</option>
+          <option value="raw">raw numbers</option>
+        </select>
+      </label>
+      <label class="lab-check"><input type="checkbox" id="labSteer" checked><span>jev steers</span></label>
+      <label class="lab-check"><input type="checkbox" id="labDodge" checked><span>jev dodges</span></label>
+      <label class="lab-check"><input type="checkbox" id="labLoop" checked><span>autoloop</span></label>
+      <button class="mode-btn" id="labLane" aria-pressed="true">LANE: GPU</button>
+      <label class="lab-range"><span>DODGE ≥ <b id="labDangerV">0.90</b></span>
+        <input type="range" id="labDanger" min="0" max="1" step="0.05" value="0.9"></label>
+      <label class="lab-range"><span>FIRE ≥ <b id="labFireV">0.35</b></span>
+        <input type="range" id="labFire" min="0" max="1" step="0.05" value="0.35"></label>
+    </div>
+    <div class="lab-chart" id="labChart" aria-label="ablation study results"></div>
+  </section>
+
+  <footer class="cab-foot">
+    <span>jev judges ~10 times a second on GPU (~4 on CPU): steer, dodge, fire. Given prose and a rubric, a 0.9B model reads the battlefield fine.</span>
+  </footer>
+
+</main>
+<script src="js/telemetry.js"></script>
+<script src="js/game.js"></script>
+<script src="js/brain.js"></script>
+<script src="js/lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+{
+ "seed": 42,
+ "scenarios": 120,
+ "results": {
+  "col | danger/hit": {
+   "acc": 0.467,
+   "n": 120,
+   "p_yes": 0.939,
+   "p_no": 0.683,
+   "sep": 0.256
+  },
+  "col | danger/land": {
+   "acc": 0.467,
+   "n": 120,
+   "p_yes": 0.963,
+   "p_no": 0.689,
+   "sep": 0.274
+  },
+  "col | fire/should": {
+   "acc": 0.2,
+   "n": 120,
+   "p_yes": 0.343,
+   "p_no": 0.532,
+   "sep": -0.189
+  },
+  "col | fire/line": {
+   "acc": 0.258,
+   "n": 120,
+   "p_yes": 0.868,
+   "p_no": 0.709,
+   "sep": 0.159
+  },
+  "col | fire/hit": {
+   "acc": 0.275,
+   "n": 120,
+   "p_yes": 0.525,
+   "p_no": 0.601,
+   "sep": -0.075
+  },
+  "col | fire/aiming": {
+   "acc": 0.275,
+   "n": 120,
+   "p_yes": 0.378,
+   "p_no": 0.584,
+   "sep": -0.205
+  },
+  "col | spatial/bombL": {
+   "acc": 0.792,
+   "n": 120,
+   "p_yes": 0.621,
+   "p_no": 0.319,
+   "sep": 0.302
+  },
+  "col | spatial/alienL": {
+   "acc": 0.875,
+   "n": 120,
+   "p_yes": 0.755,
+   "p_no": 0.182,
+   "sep": 0.573
+  },
+  "col | dodge/choice": {
+   "acc": 0.469,
+   "n": 32,
+   "p_yes": null,
+   "p_no": null,
+   "sep": null
+  },
+  "col+legend | danger/hit": {
+   "acc": 0.467,
+   "n": 120,
+   "p_yes": 0.965,
+   "p_no": 0.584,
+   "sep": 0.381
+  },
+  "col+legend | danger/land": {
+   "acc": 0.467,
+   "n": 120,
+   "p_yes": 0.982,
+   "p_no": 0.694,
+   "sep": 0.288
+  },
+  "col+legend | fire/should": {
+   "acc": 0.917,
+   "n": 120,
+   "p_yes": 0.592,
+   "p_no": 0.257,
+   "sep": 0.335
+  },
+  "col+legend | fire/line": {
+   "acc": 0.433,
+   "n": 120,
+   "p_yes": 0.939,
+   "p_no": 0.579,
+   "sep": 0.359
+  },
+  "col+legend | fire/hit": {
+   "acc": 0.775,
+   "n": 120,
+   "p_yes": 0.702,
+   "p_no": 0.351,
+   "sep": 0.351
+  },
+  "col+legend | fire/aiming": {
+   "acc": 0.783,
+   "n": 120,
+   "p_yes": 0.76,
+   "p_no": 0.363,
+   "sep": 0.397
+  },
+  "col+legend | spatial/bombL": {
+   "acc": 0.825,
+   "n": 120,
+   "p_yes": 0.763,
+   "p_no": 0.267,
+   "sep": 0.496
+  },
+  "col+legend | spatial/alienL": {
+   "acc": 0.883,
+   "n": 120,
+   "p_yes": 0.91,
+   "p_no": 0.239,
+   "sep": 0.671
+  },
+  "col+legend | dodge/choice": {
+   "acc": 0.469,
+   "n": 32,
+   "p_yes": null,
+   "p_no": null,
+   "sep": null
+  },
+  "prose | danger/hit": {
+   "acc": 0.467,
+   "n": 120,
+   "p_yes": 0.94,
+   "p_no": 0.658,
+   "sep": 0.282
+  },
+  "prose | danger/land": {
+   "acc": 0.467,
+   "n": 120,
+   "p_yes": 0.981,
+   "p_no": 0.691,
+   "sep": 0.29
+  },
+  "prose | fire/should": {
+   "acc": 0.2,
+   "n": 120,
+   "p_yes": 0.354,
+   "p_no": 0.574,
+   "sep": -0.22
+  },
+  "prose | fire/line": {
+   "acc": 0.183,
+   "n": 120,
+   "p_yes": 0.516,
+   "p_no": 0.74,
+   "sep": -0.224
+  },
+  "prose | fire/hit": {
+   "acc": 0.175,
+   "n": 120,
+   "p_yes": 0.541,
+   "p_no": 0.598,
+   "sep": -0.057
+  },
+  "prose | fire/aiming": {
+   "acc": 0.217,
+   "n": 120,
+   "p_yes": 0.415,
+   "p_no": 0.625,
+   "sep": -0.209
+  },
+  "prose | spatial/bombL": {
+   "acc": 0.975,
+   "n": 120,
+   "p_yes": 0.902,
+   "p_no": 0.212,
+   "sep": 0.69
+  },
+  "prose | spatial/alienL": {
+   "acc": 1.0,
+   "n": 120,
+   "p_yes": 0.975,
+   "p_no": 0.027,
+   "sep": 0.948
+  },
+  "prose | dodge/choice": {
+   "acc": 0.469,
+   "n": 32,
+   "p_yes": null,
+   "p_no": null,
+   "sep": null
+  },
+  "prose+legend | danger/hit": {
+   "acc": 0.717,
+   "n": 120,
+   "p_yes": 0.954,
+   "p_no": 0.362,
+   "sep": 0.592
+  },
+  "prose+legend | danger/land": {
+   "acc": 0.467,
+   "n": 120,
+   "p_yes": 0.987,
+   "p_no": 0.687,
+   "sep": 0.299
+  },
+  "prose+legend | fire/should": {
+   "acc": 0.908,
+   "n": 120,
+   "p_yes": 0.34,
+   "p_no": 0.18,
+   "sep": 0.16
+  },
+  "prose+legend | fire/line": {
+   "acc": 0.1,
+   "n": 120,
+   "p_yes": 0.88,
+   "p_no": 0.789,
+   "sep": 0.091
+  },
+  "prose+legend | fire/hit": {
+   "acc": 0.858,
+   "n": 120,
+   "p_yes": 0.403,
+   "p_no": 0.274,
+   "sep": 0.129
+  },
+  "prose+legend | fire/aiming": {
+   "acc": 0.883,
+   "n": 120,
+   "p_yes": 0.435,
+   "p_no": 0.245,
+   "sep": 0.189
+  },
+  "prose+legend | spatial/bombL": {
+   "acc": 0.975,
+   "n": 120,
+   "p_yes": 0.914,
+   "p_no": 0.176,
+   "sep": 0.739
+  },
+  "prose+legend | spatial/alienL": {
+   "acc": 1.0,
+   "n": 120,
+   "p_yes": 0.986,
+   "p_no": 0.018,
+   "sep": 0.969
+  },
+  "prose+legend | dodge/choice": {
+   "acc": 0.906,
+   "n": 32,
+   "p_yes": null,
+   "p_no": null,
+   "sep": null
+  },
+  "raw | danger/hit": {
+   "acc": 0.5,
+   "n": 120,
+   "p_yes": 0.778,
+   "p_no": 0.548,
+   "sep": 0.229
+  },
+  "raw | danger/land": {
+   "acc": 0.5,
+   "n": 120,
+   "p_yes": 0.796,
+   "p_no": 0.563,
+   "sep": 0.233
+  },
+  "raw | fire/should": {
+   "acc": 0.117,
+   "n": 120,
+   "p_yes": 0.75,
+   "p_no": 0.805,
+   "sep": -0.055
+  },
+  "raw | fire/line": {
+   "acc": 0.317,
+   "n": 120,
+   "p_yes": 0.482,
+   "p_no": 0.576,
+   "sep": -0.094
+  },
+  "raw | fire/hit": {
+   "acc": 0.108,
+   "n": 120,
+   "p_yes": 0.672,
+   "p_no": 0.716,
+   "sep": -0.043
+  },
+  "raw | fire/aiming": {
+   "acc": 0.292,
+   "n": 120,
+   "p_yes": 0.469,
+   "p_no": 0.611,
+   "sep": -0.143
+  },
+  "raw | spatial/bombL": {
+   "acc": 0.617,
+   "n": 120,
+   "p_yes": 0.436,
+   "p_no": 0.38,
+   "sep": 0.057
+  },
+  "raw | spatial/alienL": {
+   "acc": 0.508,
+   "n": 120,
+   "p_yes": 0.408,
+   "p_no": 0.466,
+   "sep": -0.058
+  },
+  "raw | dodge/choice": {
+   "acc": 0.469,
+   "n": 32,
+   "p_yes": null,
+   "p_no": null,
+   "sep": null
+  }
+ }
+}
