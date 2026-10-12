@@ -222,7 +222,9 @@
       var fireP = typeof lab.fireP === "number" ? lab.fireP : 0.5;
       var applied = "HOLD";
       var shipCx = G.shipX + 13;
+      var dodging = false;
       if (d.danger > dangerP && G.bombs.length) {
+        dodging = true;
         var nowMs = performance.now();
         if (G._dodgeUntil && nowMs < G._dodgeUntil) {
           // committed dodge: no flip-flopping between ticks (deaths danced under bombs)
@@ -272,7 +274,17 @@
         // jev decides WHEN to shoot; the gun only fires shots the march won't break
         if (G.bullet || G.gunCool > 0) applied += " + FIRE HELD (gun busy)";
         else if (shotWillHit()) { fire(); applied += " + FIRE"; }
-        else applied += " + FIRE HELD (no shot line)";
+        else {
+          applied += " + FIRE HELD (no shot line)";
+          // a starved gun is a steering order: go stand under the fleet's hottest column
+          if (!dodging) {
+            var col = bestFireColumn();
+            if (col !== null && Math.abs(col - shipCx) > 10) {
+              G.shipDir = col > shipCx ? 1 : -1;
+              applied = "AMBUSH " + (col > shipCx ? "R" : "L");
+            }
+          }
+        }
       }
       return applied;
     },
@@ -305,6 +317,38 @@
       if (a.x <= bt && a.x + w >= bx) n++;
     });
     return n;
+  }
+
+  /* the ambush column: which column of the fleet body is crossed most often over
+     the next beats of the march (same replay as shotWillHit). A starved gun steers
+     there instead of waiting in a dead column — more connect lines, not lower gates. */
+  function bestFireColumn() {
+    var sim = [];
+    G.aliens.forEach(function (a) {
+      if (!a.alive) return;
+      sim.push({ x: a.x, y: a.y, w: spriteW(SPR[a.kind], ALIEN_SCALE) });
+    });
+    if (!sim.length) return null;
+    var dir = G.dir;
+    var score = {};
+    for (var beat = 0; beat < 12; beat++) {
+      sim.forEach(function (a) {
+        var c = Math.round((a.x + a.w / 2) / 10) * 10;
+        score[c] = (score[c] || 0) + 1 + a.y / H;   // deeper aliens slightly preferred
+      });
+      var flip = false;
+      sim.forEach(function (a) {
+        if ((dir > 0 && a.x + a.w + STEP_X > W - 12) || (dir < 0 && a.x - STEP_X < 12)) flip = true;
+      });
+      if (flip) sim.forEach(function (a) { a.y += STEP_DOWN; });
+      else sim.forEach(function (a) { a.x += STEP_X * dir; });
+    }
+    var best = null, bs = -Infinity;
+    for (var c in score) {
+      var s = score[c] - Math.abs(+c - (G.shipX + 12)) / 2000;   // ties break toward the ship
+      if (s > bs) { bs = s; best = +c; }
+    }
+    return best;
   }
 
   /* is the fleet's LOWEST alien in the bullet's column? settle-and-fire condition:

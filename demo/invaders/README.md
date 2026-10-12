@@ -18,17 +18,22 @@ python3 demo/invaders/server.py       # serves http://127.0.0.1:8099
 Open `http://127.0.0.1:8099/`, pick BRAIN. A GPU lane (llama.cpp q4 GGUF, ~15-23
 judgments/s) can be mounted behind `/v1/gpu/*`; toggle it in the LAB strip.
 
-## Results (5 episodes x 90 s, GPU lane, p50 46 ms)
+## Results (5 episodes x 90 s, GPU lane, config frozen)
 
 | metric | value |
 |---|---|
-| median score | 610-790 (best 1050) |
-| kills / episode | 38-62 |
-| shot accuracy | 94-100% |
-| decisions/s | ~15-23 |
+| median score | 820 (730-930) |
+| kills / episode | 43-53 |
+| shot accuracy | 98% |
+| survival | 5/5 episodes ran the full 90 s |
+| decisions/s | ~12 |
 | wave reached | 2 |
 
 Random-pilot baseline: median ~130, kills near zero.
+
+Numbers from `validation-gpu2.json` with the current frozen config (ambush steering +
+committed dodge + swept hit test + tuned gates). One caveat: thresholds were tuned on
+dev episodes; a sealed test split is still owed before quoting these anywhere external.
 
 ## Learnings
 
@@ -42,7 +47,15 @@ Random-pilot baseline: median ~130, kills near zero.
 - **Death forensics: detection is not the failure mode.** 11 of 13 recorded deaths had
   danger P above the gate; the ship died dancing between two bombs because the dodge
   direction re-flipped every tick. Fix: pick the lane with max clearance from every
-  bomb column and commit to it for 400 ms (hysteresis).
+  bomb column and commit to it for 400 ms (hysteresis). Verified: 2 deaths in 450 s,
+  both at danger P > 0.87 (edge cases, not flip-flops).
+- **A starved gun is a steering order.** With the fire gate refusing shots that would
+  miss, the early game starved: the ship waited in a dead column for a connect line
+  that only the fleet's march could open. Fix: when the trigger wants to fire but no
+  line exists, replay the march 12 beats ahead, score every column by how often alien
+  bodies cross it (deeper aliens weighted higher), and steer there (`AMBUSH L/R`).
+  More connect-line opportunities, never lower gates — this took the median from 610
+  to 820.
 - **The gun-state phrasing is innocent.** Raw seconds vs bucketed vs omitted cooldown
   text: fire P 0.89-0.92 across all variants. Under-firing is geometric (no connect
   line), not linguistic.
@@ -57,10 +70,8 @@ refuses shots that would miss, executes patrol proportionally, holds position on
 
 ## Known issues / next
 
-- `FIRE HELD (no shot line)` dominates the early game — firing rate is low until the
-  fleet descends. Lever: more connect-line opportunities, not more trigger pulls.
-- Occasional low-scoring episodes from a fire-trigger stall (static quantized state +
-  cache). Firing-rate chart in the brain panel makes it visible.
+- ~~`FIRE HELD (no shot line)` dominates the early game~~ resolved by ambush steering
+  (see learnings); the firing-rate chart in the brain panel shows the recovery.
 - Threshold study was dev-set-tuned; a sealed test split is owed before quoting numbers.
 
 Demo code: GPL-3.0. `study.py` regenerates `study.json` (seeded, labeled scenarios).

@@ -1,0 +1,87 @@
+{
+ "episodes": [
+  {
+   "mode": "brain",
+   "score": 730,
+   "kills": 44,
+   "lives": 3,
+   "seconds": 90,
+   "wave": 1,
+   "ended": "capped"
+  },
+  {
+   "mode": "brain",
+   "score": 730,
+   "kills": 43,
+   "lives": 2,
+   "seconds": 90,
+   "wave": 1,
+   "ended": "capped"
+  },
+  {
+   "mode": "brain",
+   "score": 850,
+   "kills": 48,
+   "lives": 2,
+   "seconds": 90,
+   "wave": 1,
+   "ended": "capped"
+  },
+  {
+   "mode": "brain",
+   "score": 820,
+   "kills": 47,
+   "lives": 3,
+   "seconds": 90,
+   "wave": 1,
+   "ended": "capped"
+  },
+  {
+   "mode": "brain",
+   "score": 930,
+   "kills": 53,
+   "lives": 3,
+   "seconds": 90,
+   "wave": 2,
+   "ended": "capped"
+  }
+ ],
+ "shots": {
+  "mode": "brain",
+  "shots": 54,
+  "acc": 0.9814814814814815,
+  "wasted": 30,
+  "closeCalls": 2,
+  "deaths": 0,
+  "shieldPct": null,
+  "flipsPerSec": 2.2768139265490226,
+  "alignedShare": 0.3072573044297832,
+  "lastShot": {
+   "outcome": "HIT +10",
+   "aligned": true,
+   "points": 0
+  }
+ },
+ "deaths": [
+  {
+   "t": "2026-10-12T09:45:39.832Z",
+   "bombX": 402,
+   "shipX": 401,
+   "bombsInAir": 2,
+   "lastDanger": 0.87
+  },
+  {
+   "t": "2026-10-12T09:47:00.695Z",
+   "bombX": 36,
+   "shipX": 16,
+   "bombsInAir": 2,
+   "lastDanger": 0.96
+  }
+ ],
+ "latency": {
+  "n": 5135,
+  "p50": 66.9,
+  "p95": 86.3
+ },
+ "pageErrors": []
+}
